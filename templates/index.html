@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>GST Calculator</title>
 
+    <!-- ✅ Viewport meta for mobile responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -53,6 +56,13 @@
         .result-title {
             font-weight: bold;
         }
+
+        /* ✅ Make sure split inputs stack on very small screens */
+        @media (max-width: 576px) {
+            #splitGSTInputs {
+                flex-direction: column !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -61,7 +71,7 @@
     <div class="row justify-content-center">
 
         <!-- Form Column -->
-        <div class="col-lg-6 mb-4">
+        <div class="col-lg-6 mb-4 col-md-8 col-sm-12">
             <div class="calculator-card">
                 <div class="card-header">
                     <h4>GST Calculator</h4>
@@ -95,74 +105,3 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">SGST (%)</label>
                                 <input type="number" name="sgst" step="0.01" class="form-control">
-                            </div>
-                        </div>
-
-                        <!-- Tax Type -->
-                        <div class="mb-3">
-                            <label class="form-label">Tax Type</label>
-                            <select name="tax_type" class="form-select">
-                                <option value="exclusive">Tax Exclusive</option>
-                                <option value="inclusive">Tax Inclusive</option>
-                            </select>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Calculate</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Result Column -->
-        {% if result %}
-<div class="col-lg-6">
-    <div class="calculator-card result-highlight animate__animated animate__fadeInRight">
-        <div class="card-header bg-success">
-            <h4 class="text-white">Calculation Result</h4>
-        </div>
-        <div class="card-body">
-            <ul class="list-group">
-                <li class="list-group-item">Original Amount: <span class="highlight-text">₹{{ result.amount }}</span></li>
-                <li class="list-group-item">GST Rate: <span class="highlight-text">{{ result.gst_rate }}%</span></li>
-                <li class="list-group-item">GST Amount: <span class="highlight-text">₹{{ result.gst_amount }}</span></li>
-
-                {% if result.is_split %}
-                <li class="list-group-item">CGST: <span class="highlight-text">₹{{ result.cgst }}</span></li>
-                <li class="list-group-item">SGST: <span class="highlight-text">₹{{ result.sgst }}</span></li>
-                {% endif %}
-
-                <li class="list-group-item">Total Amount (incl. GST): <span class="highlight-text">₹{{ result.total }}</span></li>
-                <li class="list-group-item">Tax Type: <span class="highlight-text">{{ result.tax_type.title() }}</span></li>
-            </ul>
-        </div>
-    </div>
-</div>
-{% endif %}
-    </div>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- JavaScript to toggle GST inputs -->
-<script>
-    function toggleGSTInputs() {
-        const checkbox = document.getElementById('splitGST');
-        const singleGST = document.getElementById('singleGST');
-        const splitGST = document.getElementById('splitGSTInputs');
-
-        if (checkbox.checked) {
-            singleGST.style.display = 'none';
-            splitGST.style.display = 'flex';
-        } else {
-            singleGST.style.display = 'block';
-            splitGST.style.display = 'none';
-        }
-    }
-</script>
-
-</body>
-</html>
