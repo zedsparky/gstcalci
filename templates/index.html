@@ -57,6 +57,37 @@
 </head>
 <body>
 
+<!-- Team Info Button -->
+<div class="container mt-3">
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#teamInfoModal">
+            Team Info
+        </button>
+    </div>
+</div>
+
+<!-- Team Info Modal -->
+<div class="modal fade" id="teamInfoModal" tabindex="-1" aria-labelledby="teamInfoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="teamInfoModalLabel">Hackathon Team Info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Organizer:</strong> Samsung Innovation Centre</li>
+          <li class="list-group-item"><strong>Hackathon Team Name:</strong> PYbots</li>
+          <li class="list-group-item"><strong>Members:</strong> Anushka, Ankita, Arun, Subham, Arush</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
 
