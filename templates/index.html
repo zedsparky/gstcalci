@@ -1,172 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>GST Calculator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>GST Calculator</title>
 
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Custom Styles -->
-  <style>
-    body {
-      background-image: url('https://www.transparenttextures.com/patterns/black-paper.png');
-      background-color: #f8f9fa;
-      background-repeat: repeat;
-    }
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-image: url('https://www.transparenttextures.com/patterns/black-paper.png');
+            background-color: #f8f9fa;
+            background-repeat: repeat;
+        }
 
-    .calculator-card {
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-      padding: 25px;
-      margin-bottom: 20px;
-    }
+        .calculator-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
 
-    .card-header {
-      background-color: #0d6efd;
-      color: #fff;
-      border-radius: 8px 8px 0 0;
-      padding: 15px 20px;
-      text-align: center;
-    }
+        .card-header {
+            background-color: #0d6efd;
+            color: #fff;
+            border-radius: 8px 8px 0 0;
+            padding: 15px 20px;
+            text-align: center;
+        }
 
-    .card-header.bg-success {
-      background-color: #198754 !important;
-    }
+        .card-header.bg-success {
+            background-color: #198754 !important;
+        }
 
-    .form-check-label {
-      font-weight: 500;
-    }
+        h4 {
+            margin-bottom: 0;
+        }
 
-    .btn-primary {
-      font-weight: bold;
-      min-height: 48px;
-    }
+        .form-check-label {
+            font-weight: 500;
+        }
 
-    .btn-secondary {
-      min-height: 48px;
-    }
+        .btn-primary {
+            font-weight: bold;
+        }
 
-    .list-group-item {
-      font-weight: 500;
-    }
+        .list-group-item {
+            font-weight: 500;
+        }
 
-    .result-title {
-      font-weight: bold;
-    }
-  </style>
+        .result-title {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container mt-5">
-  <div class="row justify-content-center">
+    <div class="row justify-content-center">
 
-    <!-- Form Column -->
-    <div class="col-lg-6 col-md-8 col-sm-12">
-      <div class="calculator-card">
-        <div class="card-header">
-          <h4>GST Calculator</h4>
+        <!-- Form Column -->
+        <div class="col-lg-6 mb-4">
+            <div class="calculator-card">
+                <div class="card-header">
+                    <h4>GST Calculator</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" id="gstForm">
+                        <!-- Amount -->
+                        <div class="mb-3">
+                            <label class="form-label">Amount (₹)</label>
+                            <input type="number" name="amount" step="0.01" class="form-control" required>
+                        </div>
+
+                        <!-- Split GST Toggle -->
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="splitGST" onchange="toggleGSTInputs()">
+                            <label class="form-check-label" for="splitGST">Split GST into CGST & SGST</label>
+                        </div>
+
+                        <!-- Single GST Rate -->
+                        <div class="mb-3" id="singleGST">
+                            <label class="form-label">GST Rate (%)</label>
+                            <input type="number" name="gst_rate" step="0.01" class="form-control">
+                        </div>
+
+                        <!-- CGST & SGST Inputs -->
+                        <div class="row" id="splitGSTInputs" style="display: none;">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">CGST (%)</label>
+                                <input type="number" name="cgst" step="0.01" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">SGST (%)</label>
+                                <input type="number" name="sgst" step="0.01" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Tax Type -->
+                        <div class="mb-3">
+                            <label class="form-label">Tax Type</label>
+                            <select name="tax_type" class="form-select">
+                                <option value="exclusive">Tax Exclusive</option>
+                                <option value="inclusive">Tax Inclusive</option>
+                            </select>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-fill">Calculate</button>
+                            <button type="reset" class="btn btn-secondary flex-fill" onclick="clearResult()">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <form method="POST">
-            <!-- Amount -->
-            <div class="mb-3">
-              <label class="form-label">Amount (₹)</label>
-              <input type="number" name="amount" step="0.01" class="form-control" required>
-            </div>
 
-            <!-- Split GST Toggle -->
-            <div class="form-check form-switch mb-3">
-              <input class="form-check-input" type="checkbox" id="splitGST" onchange="toggleGSTInputs()">
-              <label class="form-check-label" for="splitGST">Split GST into CGST & SGST</label>
-            </div>
+        <!-- Result Column -->
+        {% if result %}
+        <div class="col-lg-6" id="result-section">
+            <div class="calculator-card result-highlight animate__animated animate__fadeInRight">
+                <div class="card-header bg-success">
+                    <h4 class="text-white">Calculation Result</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">Original Amount: ₹{{ result.amount }}</li>
+                        <li class="list-group-item">GST Rate: {{ result.gst_rate }}%</li>
+                        <li class="list-group-item">GST Amount: ₹{{ result.gst_amount }}</li>
 
-            <!-- Single GST Rate -->
-            <div class="mb-3" id="singleGST">
-              <label class="form-label">GST Rate (%)</label>
-              <input type="number" name="gst_rate" step="0.01" class="form-control">
-            </div>
+                        {% if result.is_split %}
+                        <li class="list-group-item">CGST: ₹{{ result.cgst }}</li>
+                        <li class="list-group-item">SGST: ₹{{ result.sgst }}</li>
+                        {% endif %}
 
-            <!-- CGST & SGST Inputs -->
-            <div class="row g-2" id="splitGSTInputs" style="display:none;">
-              <div class="col-12 col-md-6">
-                <label class="form-label">CGST (%)</label>
-                <input type="number" name="cgst" step="0.01" class="form-control">
-              </div>
-              <div class="col-12 col-md-6">
-                <label class="form-label">SGST (%)</label>
-                <input type="number" name="sgst" step="0.01" class="form-control">
-              </div>
+                        <li class="list-group-item">Total Amount (incl. GST): ₹{{ result.total }}</li>
+                        <li class="list-group-item">Tax Type: {{ result.tax_type.title() }}</li>
+                    </ul>
+                </div>
             </div>
-
-            <!-- Tax Type -->
-            <div class="mb-4 mt-3">
-              <label class="form-label">Tax Type</label>
-              <select name="tax_type" class="form-select">
-                <option value="exclusive">Tax Exclusive</option>
-                <option value="inclusive">Tax Inclusive</option>
-              </select>
-            </div>
-
-            <!-- Calculate + Reset Buttons -->
-            <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-primary btn-lg">Calculate</button>
-              <button type="reset" class="btn btn-secondary btn-lg">Reset</button>
-            </div>
-          </form>
         </div>
-      </div>
+        {% endif %}
     </div>
-
-    <!-- Result Column -->
-    {% if result %}
-    <div class="col-lg-6 col-md-8 col-sm-12">
-      <div class="calculator-card">
-        <div class="card-header bg-success">
-          <h4 class="text-white">Calculation Result</h4>
-        </div>
-        <div class="card-body">
-          <ul class="list-group">
-            <li class="list-group-item">Original Amount: <span>₹{{ result.amount }}</span></li>
-            <li class="list-group-item">GST Rate: <span>{{ result.gst_rate }}%</span></li>
-            <li class="list-group-item">GST Amount: <span>₹{{ result.gst_amount }}</span></li>
-
-            {% if result.is_split %}
-            <li class="list-group-item">CGST: <span>₹{{ result.cgst }}</span></li>
-            <li class="list-group-item">SGST: <span>₹{{ result.sgst }}</span></li>
-            {% endif %}
-
-            <li class="list-group-item">Total Amount (incl. GST): <span>₹{{ result.total }}</span></li>
-            <li class="list-group-item">Tax Type: <span>{{ result.tax_type.title() }}</span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    {% endif %}
-
-  </div>
 </div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- JavaScript to toggle GST inputs -->
+<!-- JavaScript -->
 <script>
-  function toggleGSTInputs() {
-    const checkbox = document.getElementById('splitGST');
-    const singleGST = document.getElementById('singleGST');
-    const splitGST = document.getElementById('splitGSTInputs');
+    function toggleGSTInputs() {
+        const checkbox = document.getElementById('splitGST');
+        const singleGST = document.getElementById('singleGST');
+        const splitGST = document.getElementById('splitGSTInputs');
 
-    if (checkbox.checked) {
-      singleGST.style.display = 'none';
-      splitGST.style.display = 'flex';
-    } else {
-      singleGST.style.display = 'block';
-      splitGST.style.display = 'none';
+        if (checkbox.checked) {
+            singleGST.style.display = 'none';
+            splitGST.style.display = 'flex';
+        } else {
+            singleGST.style.display = 'block';
+            splitGST.style.display = 'none';
+        }
     }
-  }
+
+    function clearResult() {
+        const result = document.getElementById("result-section");
+        if (result) {
+            result.style.display = "none";
+        }
+    }
 </script>
 
 </body>
