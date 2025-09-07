@@ -1,72 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>GST Calculator</title>
+    <meta charset="UTF-8">
+    <title>GST Calculator</title>
 
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Custom Styles -->
-  <style>
-    body {
-      background-image: url('https://www.transparenttextures.com/patterns/black-paper.png');
-      background-color: #f8f9fa;
-      background-repeat: repeat;
-    }
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-image: url('https://www.transparenttextures.com/patterns/black-paper.png');
+            background-color: #f8f9fa;
+            background-repeat: repeat;
+            min-height: 100vh;
+        }
 
-    .calculator-card {
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-      padding: 25px;
-      height: 100%;
-    }
+        .calculator-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
 
-    .card-header {
-      background-color: #0d6efd;
-      color: #fff;
-      border-radius: 8px 8px 0 0;
-      padding: 15px 20px;
-      text-align: center;
-    }
+        .card-header {
+            background-color: #0d6efd;
+            color: #fff;
+            border-radius: 8px 8px 0 0;
+            padding: 15px 20px;
+            text-align: center;
+        }
 
-    .card-header.bg-success {
-      background-color: #198754 !important;
-    }
+        .card-header.bg-success {
+            background-color: #198754 !important;
+        }
 
-    .list-group-item {
-      font-weight: 500;
-    }
+        h4 {
+            margin-bottom: 0;
+        }
 
-    @media (max-width: 576px) {
-      .calculator-card {
-        padding: 15px;
-        border-radius: 8px;
-      }
-      .card-header {
-        padding: 10px;
-        font-size: 1rem;
-      }
-      .container {
-        padding-left: 6px;
-        padding-right: 6px;
-      }
-      .list-group-item {
-        font-size: 0.95rem;
-      }
-    }
-  </style>
+        .form-check-label {
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            font-weight: bold;
+        }
+
+        .list-group-item {
+            font-weight: 500;
+        }
+
+        .result-title {
+            font-weight: bold;
+        }
+
+        /* ---------- MOBILE-ONLY TWEAKS (<=576px) ---------- */
+        @media (max-width: 576px) {
+            /* Use a wrapper for the main area to center content vertically.
+               We subtract ~80px to account for the top Team Info button area. */
+            .main-content {
+                min-height: calc(100vh - 80px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-left: 10px;
+                padding-right: 10px;
+                margin-top: 0 !important; /* remove extra top gap */
+                margin-bottom: 12px;
+            }
+
+            /* make row behave full width inside the centered wrapper */
+            .main-content .row {
+                width: 100%;
+                margin: 0;
+            }
+
+            /* Narrow the card a bit and remove big paddings */
+            .calculator-card {
+                padding: 16px;
+                border-radius: 10px;
+                box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            }
+
+            /* Keep header compact */
+            .card-header {
+                padding: 10px 12px;
+                font-size: 1rem;
+            }
+
+            /* Ensure the calculator is centered and doesn't hug the edges */
+            .col-centered {
+                display: flex;
+                justify-content: center;
+            }
+
+            /* result card spacing when stacked under calculator */
+            #result-section .calculator-card {
+                margin-top: 12px;
+            }
+
+            /* Slight font-size adjustments for better fit */
+            .list-group-item {
+                font-size: 0.95rem;
+            }
+
+            /* Reduce Team Info button container padding so it doesn't push content down */
+            .team-btn-container {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+        }
+        /* ---------- end mobile tweaks ---------- */
+    </style>
 </head>
 <body>
 
 <!-- Team Info Button -->
-<div class="container mt-3">
-  <div class="d-flex justify-content-end">
-    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#teamInfoModal">
-      Team Info
-    </button>
-  </div>
+<div class="container mt-3 team-btn-container">
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#teamInfoModal">
+            Team Info
+        </button>
+    </div>
 </div>
 
 <!-- Team Info Modal -->
@@ -91,93 +148,93 @@
   </div>
 </div>
 
-<div class="container mt-5">
-  <div class="row justify-content-center g-4">
+<!-- MAIN CONTENT WRAPPER: this gets vertically centered on mobile -->
+<div class="container mt-5 main-content">
+    <div class="row justify-content-center g-4">
 
-    <!-- Calculator -->
-<div class="col-12 col-sm-10 col-md-8 col-lg-6 d-flex justify-content-center">
-  <div class="calculator-card w-100">
-    <div class="card-header">
-      <h4>GST Calculator</h4>
+        <!-- Form Column (centered on mobile, left on desktop) -->
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-centered">
+            <div class="calculator-card w-100">
+                <div class="card-header">
+                    <h4>GST Calculator</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" id="gstForm">
+                        <!-- Amount -->
+                        <div class="mb-3">
+                            <label class="form-label">Amount (₹)</label>
+                            <input type="number" name="amount" step="0.01" class="form-control" required>
+                        </div>
+
+                        <!-- Split GST Toggle -->
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="splitGST" onchange="toggleGSTInputs()">
+                            <label class="form-check-label" for="splitGST">Split GST into CGST & SGST</label>
+                        </div>
+
+                        <!-- Single GST Rate -->
+                        <div class="mb-3" id="singleGST">
+                            <label class="form-label">GST Rate (%)</label>
+                            <input type="number" name="gst_rate" step="0.01" class="form-control">
+                        </div>
+
+                        <!-- CGST & SGST Inputs -->
+                        <div class="row" id="splitGSTInputs" style="display: none;">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">CGST (%)</label>
+                                <input type="number" name="cgst" step="0.01" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">SGST (%)</label>
+                                <input type="number" name="sgst" step="0.01" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Tax Type -->
+                        <div class="mb-3">
+                            <label class="form-label">Tax Type</label>
+                            <select name="tax_type" class="form-select">
+                                <option value="exclusive">Tax Exclusive</option>
+                                <option value="inclusive">Tax Inclusive</option>
+                            </select>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-fill">Calculate</button>
+                            <button type="reset" class="btn btn-secondary flex-fill" onclick="clearResult()">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Column (stacks under calculator on mobile; remains right-side on desktop) -->
+        {% if result %}
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-centered" id="result-section">
+            <div class="calculator-card w-100">
+                <div class="card-header bg-success">
+                    <h4 class="text-white">Calculation Result</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">Original Amount: ₹{{ result.amount }}</li>
+                        <li class="list-group-item">GST Rate: {{ result.gst_rate }}%</li>
+                        <li class="list-group-item">GST Amount: ₹{{ result.gst_amount }}</li>
+
+                        {% if result.is_split %}
+                        <li class="list-group-item">CGST: ₹{{ result.cgst }}</li>
+                        <li class="list-group-item">SGST: ₹{{ result.sgst }}</li>
+                        {% endif %}
+
+                        <li class="list-group-item">Total Amount (incl. GST): ₹{{ result.total }}</li>
+                        <li class="list-group-item">Tax Type: {{ result.tax_type.title() }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
-    <div class="card-body">
-      <form method="POST" id="gstForm">
-        <!-- Amount -->
-        <div class="mb-3">
-          <label class="form-label">Amount (₹)</label>
-          <input type="number" name="amount" step="0.01" class="form-control" required>
-        </div>
-
-        <!-- Split GST Toggle -->
-        <div class="form-check form-switch mb-3">
-          <input class="form-check-input" type="checkbox" id="splitGST" onchange="toggleGSTInputs()">
-          <label class="form-check-label" for="splitGST">Split GST into CGST & SGST</label>
-        </div>
-
-        <!-- Single GST Rate -->
-        <div class="mb-3" id="singleGST">
-          <label class="form-label">GST Rate (%)</label>
-          <input type="number" name="gst_rate" step="0.01" class="form-control">
-        </div>
-
-        <!-- CGST & SGST Inputs -->
-        <div class="row" id="splitGSTInputs" style="display: none;">
-          <div class="col-6 mb-3">
-            <label class="form-label">CGST (%)</label>
-            <input type="number" name="cgst" step="0.01" class="form-control">
-          </div>
-          <div class="col-6 mb-3">
-            <label class="form-label">SGST (%)</label>
-            <input type="number" name="sgst" step="0.01" class="form-control">
-          </div>
-        </div>
-
-        <!-- Tax Type -->
-        <div class="mb-3">
-          <label class="form-label">Tax Type</label>
-          <select name="tax_type" class="form-select">
-            <option value="exclusive">Tax Exclusive</option>
-            <option value="inclusive">Tax Inclusive</option>
-          </select>
-        </div>
-
-        <!-- Buttons -->
-        <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-primary flex-fill">Calculate</button>
-          <button type="reset" class="btn btn-secondary flex-fill" onclick="clearResult()">Reset</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-    <!-- Result -->
-    {% if result %}
-    <div class="col-12 col-lg-6" id="result-section">
-      <div class="calculator-card h-100">
-        <div class="card-header bg-success">
-          <h4 class="text-white">Calculation Result</h4>
-        </div>
-        <div class="card-body">
-          <ul class="list-group">
-            <li class="list-group-item">Original Amount: ₹{{ result.amount }}</li>
-            <li class="list-group-item">GST Rate: {{ result.gst_rate }}%</li>
-            <li class="list-group-item">GST Amount: ₹{{ result.gst_amount }}</li>
-
-            {% if result.is_split %}
-            <li class="list-group-item">CGST: ₹{{ result.cgst }}</li>
-            <li class="list-group-item">SGST: ₹{{ result.sgst }}</li>
-            {% endif %}
-
-            <li class="list-group-item">Total Amount (incl. GST): ₹{{ result.total }}</li>
-            <li class="list-group-item">Tax Type: {{ result.tax_type.title() }}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    {% endif %}
-  </div>
 </div>
 
 <!-- Bootstrap JS -->
@@ -185,28 +242,27 @@
 
 <!-- JavaScript -->
 <script>
-  function toggleGSTInputs() {
-    const checkbox = document.getElementById('splitGST');
-    const singleGST = document.getElementById('singleGST');
-    const splitGST = document.getElementById('splitGSTInputs');
+    function toggleGSTInputs() {
+        const checkbox = document.getElementById('splitGST');
+        const singleGST = document.getElementById('singleGST');
+        const splitGST = document.getElementById('splitGSTInputs');
 
-    if (checkbox.checked) {
-      singleGST.style.display = 'none';
-      splitGST.style.display = 'flex';
-    } else {
-      singleGST.style.display = 'block';
-      splitGST.style.display = 'none';
+        if (checkbox.checked) {
+            singleGST.style.display = 'none';
+            splitGST.style.display = 'flex';
+        } else {
+            singleGST.style.display = 'block';
+            splitGST.style.display = 'none';
+        }
     }
-  }
 
-  function clearResult() {
-    const result = document.getElementById("result-section");
-    if (result) {
-      result.style.display = "none";
+    function clearResult() {
+        const result = document.getElementById("result-section");
+        if (result) {
+            result.style.display = "none";
+        }
     }
-  }
 </script>
 
 </body>
 </html>
-
