@@ -95,61 +95,62 @@
   <div class="row justify-content-center g-4">
 
     <!-- Calculator -->
-    <div class="col-12 col-lg-6">
-      <div class="calculator-card">
-        <div class="card-header">
-          <h4>GST Calculator</h4>
-        </div>
-        <div class="card-body">
-          <form method="POST" id="gstForm">
-            <!-- Amount -->
-            <div class="mb-3">
-              <label class="form-label">Amount (₹)</label>
-              <input type="number" name="amount" step="0.01" class="form-control" required>
-            </div>
-
-            <!-- Split GST Toggle -->
-            <div class="form-check form-switch mb-3">
-              <input class="form-check-input" type="checkbox" id="splitGST" onchange="toggleGSTInputs()">
-              <label class="form-check-label" for="splitGST">Split GST into CGST & SGST</label>
-            </div>
-
-            <!-- Single GST Rate -->
-            <div class="mb-3" id="singleGST">
-              <label class="form-label">GST Rate (%)</label>
-              <input type="number" name="gst_rate" step="0.01" class="form-control">
-            </div>
-
-            <!-- CGST & SGST Inputs -->
-            <div class="row" id="splitGSTInputs" style="display: none;">
-              <div class="col-6 mb-3">
-                <label class="form-label">CGST (%)</label>
-                <input type="number" name="cgst" step="0.01" class="form-control">
-              </div>
-              <div class="col-6 mb-3">
-                <label class="form-label">SGST (%)</label>
-                <input type="number" name="sgst" step="0.01" class="form-control">
-              </div>
-            </div>
-
-            <!-- Tax Type -->
-            <div class="mb-3">
-              <label class="form-label">Tax Type</label>
-              <select name="tax_type" class="form-select">
-                <option value="exclusive">Tax Exclusive</option>
-                <option value="inclusive">Tax Inclusive</option>
-              </select>
-            </div>
-
-            <!-- Buttons -->
-            <div class="d-flex gap-2">
-              <button type="submit" class="btn btn-primary flex-fill">Calculate</button>
-              <button type="reset" class="btn btn-secondary flex-fill" onclick="clearResult()">Reset</button>
-            </div>
-          </form>
-        </div>
-      </div>
+<div class="col-12 col-sm-10 col-md-8 col-lg-6 d-flex justify-content-center">
+  <div class="calculator-card w-100">
+    <div class="card-header">
+      <h4>GST Calculator</h4>
     </div>
+    <div class="card-body">
+      <form method="POST" id="gstForm">
+        <!-- Amount -->
+        <div class="mb-3">
+          <label class="form-label">Amount (₹)</label>
+          <input type="number" name="amount" step="0.01" class="form-control" required>
+        </div>
+
+        <!-- Split GST Toggle -->
+        <div class="form-check form-switch mb-3">
+          <input class="form-check-input" type="checkbox" id="splitGST" onchange="toggleGSTInputs()">
+          <label class="form-check-label" for="splitGST">Split GST into CGST & SGST</label>
+        </div>
+
+        <!-- Single GST Rate -->
+        <div class="mb-3" id="singleGST">
+          <label class="form-label">GST Rate (%)</label>
+          <input type="number" name="gst_rate" step="0.01" class="form-control">
+        </div>
+
+        <!-- CGST & SGST Inputs -->
+        <div class="row" id="splitGSTInputs" style="display: none;">
+          <div class="col-6 mb-3">
+            <label class="form-label">CGST (%)</label>
+            <input type="number" name="cgst" step="0.01" class="form-control">
+          </div>
+          <div class="col-6 mb-3">
+            <label class="form-label">SGST (%)</label>
+            <input type="number" name="sgst" step="0.01" class="form-control">
+          </div>
+        </div>
+
+        <!-- Tax Type -->
+        <div class="mb-3">
+          <label class="form-label">Tax Type</label>
+          <select name="tax_type" class="form-select">
+            <option value="exclusive">Tax Exclusive</option>
+            <option value="inclusive">Tax Inclusive</option>
+          </select>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary flex-fill">Calculate</button>
+          <button type="reset" class="btn btn-secondary flex-fill" onclick="clearResult()">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
     <!-- Result -->
     {% if result %}
@@ -208,3 +209,4 @@
 
 </body>
 </html>
+
