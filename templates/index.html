@@ -53,6 +53,25 @@
         .result-title {
             font-weight: bold;
         }
+
+        @media (max-width: 576px) {
+            .calculator-card {
+                padding: 12px;
+                border-radius: 8px;
+            }
+            .card-header {
+                padding: 10px 12px;
+                font-size: 1.1rem;
+            }
+            .container {
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+            .result-highlight {
+                margin-top: 0 !important;
+                margin-bottom: 16px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -150,7 +169,7 @@
 
         <!-- Result Column -->
         {% if result %}
-        <div class="col-12 col-md-8 col-lg-6" id="result-section">
+        <div class="col-12 col-md-8 col-lg-6 mb-4" id="result-section">
             <div class="calculator-card result-highlight animate__animated animate__fadeInRight mt-3 mt-lg-0">
                 <div class="card-header bg-success">
                     <h4 class="text-white">Calculation Result</h4>
